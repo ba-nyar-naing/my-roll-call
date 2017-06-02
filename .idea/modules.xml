@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MyRollCall-CUMDY.iml" filepath="$PROJECT_DIR$/MyRollCall-CUMDY.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/my-roll-call.iml" filepath="$PROJECT_DIR$/my-roll-call.iml" />
     </modules>
   </component>
 </project>
