@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "947636883476",
+    "firebase_url": "https://myrollcall-cumdy.firebaseio.com",
+    "project_id": "myrollcall-cumdy",
+    "storage_bucket": "myrollcall-cumdy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947636883476:android:e6a33600579df0a2",
+        "android_client_info": {
+          "package_name": "com.cumdy.banyar.myrollcall_cumdy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "947636883476-jahvtot9mat9cq99nter7jmv555175v4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIBXuJPCCWpkRdjsqEaJuzVZoKv_ORdmY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "947636883476-jahvtot9mat9cq99nter7jmv555175v4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

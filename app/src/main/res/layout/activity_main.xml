@@ -1,0 +1,264 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    app:theme="@style/ToolbarWhite" />
+
+                <android.support.v4.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:weightSum="1">
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_margin="16dp"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            app:cardCornerRadius="2dp">
+
+                            <Spinner
+                                android:id="@+id/months_spinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center" />
+
+                        </android.support.v7.widget.CardView>
+
+                        <RelativeLayout
+                            android:id="@+id/linearLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center">
+
+                            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                                android:id="@+id/account_student_roll_call_circular_progressbar"
+                                android:layout_width="140dp"
+                                android:layout_height="140dp"
+                                android:layout_centerHorizontal="true"
+                                app:cpb_background_progressbar_color="@color/colorPrimary"
+                                app:cpb_background_progressbar_width="16dp"
+                                app:cpb_progressbar_color="@color/white"
+                                app:cpb_progressbar_width="14dp" />
+
+                            <TextView
+                                android:id="@+id/txt_student_roll_call_percentage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:text="0 %"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                                android:textColor="@color/colorPrimaryDark" />
+
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
+                            android:layout_margin="16dp"
+                            android:background="@color/colorPrimary"
+                            android:padding="1dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:weightSum="4">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginRight="1dp"
+                                    android:layout_weight="1"
+                                    android:background="@color/white"
+                                    android:orientation="vertical"
+                                    android:weightSum="3">
+
+                                    <TextView
+                                        android:id="@+id/txt_student_roll_call_total"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="2"
+                                        android:gravity="center"
+                                        android:text="0"
+                                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                                        android:textColor="@color/colorPrimary" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:text="Total"
+                                        android:textColor="@color/colorPrimary" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginRight="1dp"
+                                    android:layout_weight="1"
+                                    android:background="@color/white"
+                                    android:orientation="vertical"
+                                    android:weightSum="3">
+
+                                    <TextView
+                                        android:id="@+id/txt_student_roll_call_minimum"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="2"
+                                        android:gravity="center"
+                                        android:text="0"
+                                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                                        android:textColor="@color/colorPrimary" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:text="75 %"
+                                        android:textColor="@color/colorPrimary" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginRight="1dp"
+                                    android:layout_weight="1"
+                                    android:background="@color/white"
+                                    android:orientation="vertical"
+                                    android:weightSum="3">
+
+                                    <TextView
+                                        android:id="@+id/txt_student_roll_call_your_total"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="2"
+                                        android:gravity="center"
+                                        android:text="0"
+                                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                                        android:textColor="@color/colorPrimary" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:text="Your Total"
+                                        android:textColor="@color/colorPrimary" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:background="@color/white"
+                                    android:orientation="vertical"
+                                    android:weightSum="3">
+
+                                    <TextView
+                                        android:id="@+id/txt_student_roll_call_status"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="2"
+                                        android:gravity="center"
+                                        android:text="0"
+                                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                                        android:textColor="@color/colorPrimary" />
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0dp"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:text="Status"
+                                        android:textColor="@color/colorPrimary" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <android.support.v7.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            app:cardCornerRadius="2dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center">
+
+                                <Spinner
+                                    android:id="@+id/years_spinner"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="50dp" />
+
+                                <EditText
+                                    android:id="@+id/ed_input_your_roll_no"
+                                    android:layout_width="100dp"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="16dp"
+                                    android:gravity="center"
+                                    android:hint="roll no"
+                                    android:inputType="number"
+                                    android:maxLength="3" />
+                            </LinearLayout>
+                        </android.support.v7.widget.CardView>
+
+                        <Button
+                            android:id="@+id/btn_search_data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="64dp"
+                            android:layout_marginTop="16dp"
+                            android:background="@drawable/button_shape"
+                            android:padding="16dp"
+                            android:text="Search"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+                </android.support.v4.widget.NestedScrollView>
+            </LinearLayout>
+
+            <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                ads:adSize="BANNER"
+                ads:adUnitId="@string/banner_home_footer" />
+        </RelativeLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

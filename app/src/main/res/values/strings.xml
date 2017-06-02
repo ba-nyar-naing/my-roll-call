@@ -1,0 +1,11 @@
+<resources>
+
+    <string name="app_name">My Roll Call - CU MDY</string>
+    <string-array name="academicYear">
+        <item>2016-2017</item>
+    </string-array>
+
+    <string name="banner_home_footer">ca-app-pub-5146568015201794/3906340067</string>
+    <string name="interstitial_full_screen">ca-app-pub-5146568015201794/3068735264</string>
+
+</resources>

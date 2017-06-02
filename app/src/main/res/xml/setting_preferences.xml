@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="General Information">
+        <ListPreference
+            android:defaultValue="2016-2017"
+            android:entries="@array/academicYear"
+            android:entryValues="@array/academicYear"
+            android:key="academicYear"
+            android:summary="Select your academic year"
+            android:title="Academic Year" />
+        <CheckBoxPreference
+            android:key="fontUnicode"
+            android:summary="Default is Zawgyi. Check to set Unicode"
+            android:title="Font" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="About">
+        <Preference
+            android:summary="\nCircular Progress Bar\nhttps://github.com/lopspower/CircularProgressBar"
+            android:title="Library Credits" />
+        <Preference
+            android:summary="Ba Nyar Naing\nComputer University ( Mandalay )"
+            android:title="About me" />
+    </PreferenceCategory>
+</PreferenceScreen>
