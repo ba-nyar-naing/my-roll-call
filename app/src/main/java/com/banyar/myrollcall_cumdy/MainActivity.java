@@ -1,4 +1,4 @@
-package com.cumdy.banyar.myrollcall_cumdy;
+package com.banyar.myrollcall_cumdy;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -23,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cumdy.banyar.myrollcall_cumdy.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,23 +38,21 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private CircularProgressBar circularProgressBar;
-    private int roll_call_percentage = 0, roll_call_total = 0, roll_call_minimum = 0, roll_call_your_total = 0, roll_call_status = 0, maxRollNo = 0;
-    private Toolbar toolbar;
-    private TextView txtSetPercentageInCircle, txtStudentRCTotal, txtStudentRCMinium, txtStudentRCYourTotal, txtStudentRCStatus;
+    private int roll_call_percentage = 0, roll_call_total = 0, roll_call_minimum = 0, roll_call_your_total = 0, roll_call_status = 0;
+    private TextView txtSetPercentageInCircle, txtStudentRCTotal, txtStudentRCMinimum, txtStudentRCYourTotal, txtStudentRCStatus;
     private EditText txtGetYourRollNo;
     private Button btnSearchData;
     private String roll_no, year, month, academicYear;
     private boolean fontUnicode;
     private ProgressDialog progressDialog;
     private String[] years, monthsName;
-    private ArrayAdapter<String> arrayAdapterYears, arrayAdapterMonths;
-    private Spinner spinnerYear, spinnerMonth;
+    private ArrayAdapter<String> arrayAdapterMonths;
+    private Spinner spinnerMonth;
     private Student student;
     private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference myRefCurrentAcademicYear, myRefAcademicYearList, myRefRCTotal, myRefRange, myRefName, myRefRollCall;
-    public static List<String> academicYearList;
+    public static List academicYearList;
     private HashMap<String, Long> range, months;
-    private CoordinatorLayout coordinatorLayout;
+//    private CoordinatorLayout coordinatorLayout;
 
     @Override
     protected void onStart() {
@@ -89,9 +88,11 @@ public class MainActivity extends AppCompatActivity {
         spinnerAssigning();
         getSharedValues();
 
+        academicYearList = new ArrayList<>();
+
         firebaseDatabase = FirebaseDatabase.getInstance();
 
-        myRefCurrentAcademicYear = firebaseDatabase.getReference("Current Academic Year");
+        DatabaseReference myRefCurrentAcademicYear = firebaseDatabase.getReference("Current Academic Year");
         myRefCurrentAcademicYear.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -106,12 +107,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        myRefAcademicYearList = firebaseDatabase.getReference("Academic Year List");
+        DatabaseReference myRefAcademicYearList = firebaseDatabase.getReference("Academic Year List");
         myRefAcademicYearList.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                Log.i("AcdYearList", dataSnapshot.getValue().toString());
-                academicYearList = (List) dataSnapshot.getValue();
+                if (dataSnapshot.getValue() != null)
+                    academicYearList = (List) dataSnapshot.getValue();
 //                Log.i("AcdYearList", academicYearList.toString());
             }
 
@@ -145,33 +146,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getAllMonths(final String academicYear) {
-        myRefRCTotal = firebaseDatabase.getReference(academicYear + "/RollCallTotal");
+        DatabaseReference myRefRCTotal = firebaseDatabase.getReference(academicYear + "/RollCallTotal");
         myRefRCTotal.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
 //                    Log.i("Months", dataSnapshot.getValue().toString());
-                    months = (HashMap<String, Long>) dataSnapshot.getValue();
-                    monthsName = new String[months.size()];
-                    int i = 0;
-                    for (Map.Entry<String, Long> entry : months.entrySet()) {
-                        monthsName[i++] = entry.getKey();
+                    if (dataSnapshot.getValue() != null) {
+                        months = (HashMap<String, Long>) dataSnapshot.getValue();
+                        monthsName = new String[months.size()];
+                        int i = 0;
+                        for (Map.Entry<String, Long> entry : months.entrySet()) {
+                            monthsName[i++] = entry.getKey();
+                        }
+                        arrayAdapterMonths = new ArrayAdapter<>(getBaseContext(),
+                                android.R.layout.simple_dropdown_item_1line, monthsName);
+                        spinnerMonth.setAdapter(arrayAdapterMonths);
+                        spinnerMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                month = monthsName[position];
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
+                        getAllRange(academicYear);
                     }
-                    arrayAdapterMonths = new ArrayAdapter<String>(getBaseContext(),
-                            android.R.layout.simple_dropdown_item_1line, monthsName);
-                    spinnerMonth.setAdapter(arrayAdapterMonths);
-                    spinnerMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            month = monthsName[position];
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-
-                        }
-                    });
-                    getAllRange(academicYear);
                 }
             }
 
@@ -184,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getAllRange(String academicYear) {
-        myRefRange = firebaseDatabase.getReference(academicYear + "/Range");
+        DatabaseReference myRefRange = firebaseDatabase.getReference(academicYear + "/Range");
         myRefRange.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -206,26 +209,26 @@ public class MainActivity extends AppCompatActivity {
         student = new Student();
         monthsName = new String[]{"December"};
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
         circularProgressBar = (CircularProgressBar) findViewById(R.id.account_student_roll_call_circular_progressbar);
         circularProgressBar.setProgressWithAnimation(100 - roll_call_percentage, 2500);
         txtSetPercentageInCircle = (TextView) findViewById(R.id.txt_student_roll_call_percentage);
         txtStudentRCTotal = (TextView) findViewById(R.id.txt_student_roll_call_total);
-        txtStudentRCMinium = (TextView) findViewById(R.id.txt_student_roll_call_minimum);
+        txtStudentRCMinimum = (TextView) findViewById(R.id.txt_student_roll_call_minimum);
         txtStudentRCYourTotal = (TextView) findViewById(R.id.txt_student_roll_call_your_total);
         txtStudentRCStatus = (TextView) findViewById(R.id.txt_student_roll_call_status);
         txtGetYourRollNo = (EditText) findViewById(R.id.ed_input_your_roll_no);
         btnSearchData = (Button) findViewById(R.id.btn_search_data);
         txtStudentRCTotal.setText(String.valueOf(roll_call_total));
-        txtStudentRCMinium.setText(String.valueOf(roll_call_minimum));
+        txtStudentRCMinimum.setText(String.valueOf(roll_call_minimum));
     }
 
     private void spinnerAssigning() {
-        arrayAdapterYears = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> arrayAdapterYears = new ArrayAdapter<>(this,
                 android.R.layout.simple_dropdown_item_1line, years);
-        spinnerYear = (Spinner) findViewById(R.id.years_spinner);
+        Spinner spinnerYear = (Spinner) findViewById(R.id.years_spinner);
         spinnerYear.setAdapter(arrayAdapterYears);
         spinnerYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -257,6 +260,7 @@ public class MainActivity extends AppCompatActivity {
         student.setRoll_no(year + "-" + roll_no);
         student.setUni_total((months.get(month)).intValue());
 
+        DatabaseReference myRefName;
         if (fontUnicode) {
             myRefName = firebaseDatabase.getReference(academicYear + "/NameUnicode/" + year + "/" + roll_no);
             myRefName.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -297,7 +301,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-        myRefRollCall = firebaseDatabase.getReference(academicYear + "/RollCall/" + month + "/" + year + "/" + roll_no);
+        DatabaseReference myRefRollCall = firebaseDatabase.getReference(academicYear + "/RollCall/" + month + "/" + year + "/" + roll_no);
         myRefRollCall.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -323,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
     private void setDefault() {
         circularProgressBar.setProgressWithAnimation(100, 2500);
         txtStudentRCTotal.setText(String.valueOf("0"));
-        txtStudentRCMinium.setText(String.valueOf("0"));
+        txtStudentRCMinimum.setText(String.valueOf("0"));
         txtStudentRCStatus.setText("0");
         txtStudentRCStatus.setTextColor(getResources().getColor(R.color.colorPrimary));
         txtStudentRCYourTotal.setText("0");
@@ -339,7 +343,7 @@ public class MainActivity extends AppCompatActivity {
         txtSetPercentageInCircle.setText(String.valueOf(roll_call_percentage) + " %");
         colourPercentageCircle(roll_call_percentage, circularProgressBar, txtSetPercentageInCircle);
         txtStudentRCTotal.setText(String.valueOf(roll_call_total));
-        txtStudentRCMinium.setText(String.valueOf(roll_call_minimum));
+        txtStudentRCMinimum.setText(String.valueOf(roll_call_minimum));
         txtStudentRCYourTotal.setText(String.valueOf(roll_call_your_total));
         txtStudentRCStatus.setText(colourStatus(roll_call_status));
         setTitle(student.getRoll_no() + " " + student.getName());
@@ -373,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String colourStatus(int status) {
-        String temp = " ";
+        String temp;
         if (status > 0) {
             txtStudentRCStatus.setTextColor(getResources().getColor(R.color.colorPrimary));
             temp = "+" + status;
@@ -388,9 +392,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean validateRollNo(String year, int roll_no) {
-        if (roll_no <= range.get(year))
-            return true;
-        return false;
+        return roll_no <= range.get(year);
     }
 
     @Override

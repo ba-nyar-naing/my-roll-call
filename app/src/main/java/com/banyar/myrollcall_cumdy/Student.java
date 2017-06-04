@@ -1,4 +1,4 @@
-package com.cumdy.banyar.myrollcall_cumdy;
+package com.banyar.myrollcall_cumdy;
 
 /**
  * Created by banyar on 1/15/17.

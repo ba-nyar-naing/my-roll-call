@@ -1,4 +1,4 @@
-package com.cumdy.banyar.myrollcall_cumdy;
+package com.banyar.myrollcall_cumdy;
 
 import android.app.Application;
 

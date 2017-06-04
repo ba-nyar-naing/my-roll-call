@@ -1,4 +1,4 @@
-package com.cumdy.banyar.myrollcall_cumdy;
+package com.banyar.myrollcall_cumdy;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,9 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import java.util.List;
+import com.cumdy.banyar.myrollcall_cumdy.R;
 
-import static com.cumdy.banyar.myrollcall_cumdy.MainActivity.academicYearList;
+import java.util.Collections;
+
+import static com.banyar.myrollcall_cumdy.MainActivity.academicYearList;
 
 /**
  * Created by banyar on 2/4/17.
@@ -44,10 +46,13 @@ public class SettingPreferenceActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.setting_preferences);
 
-            CharSequence[] cs = academicYearList.toArray(new CharSequence[academicYearList.size()]);
-            final ListPreference listPreference = (ListPreference) findPreference("academicYear");
-            listPreference.setEntries(cs);
-            listPreference.setEntryValues(cs);
+            if (academicYearList.size() > 0) {
+                Collections.reverse(academicYearList);
+                CharSequence[] cs = (CharSequence[]) academicYearList.toArray(new CharSequence[academicYearList.size()]);
+                final ListPreference listPreference = (ListPreference) findPreference("academicYear");
+                listPreference.setEntries(cs);
+                listPreference.setEntryValues(cs);
+            }
         }
     }
 }
